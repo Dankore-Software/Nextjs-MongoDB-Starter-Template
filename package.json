@@ -1,5 +1,6 @@
 {
-  "name": "with-mongodb",
+  "name": "nextjs-mongodb-starter-template",
+  "description": "DS Next.js MongoDB Starter Template",
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
