@@ -1,4 +1,4 @@
-import { NextSeo } from 'next-seo';
+import { NextSeo } from 'next-seo'; //IMPORT AND USE THIS ON THIS PAGE OR OTHER PAGES IF YOU WANT TO CHANGE THE DEFAULT
 import Link from 'next/link';
 
 export default function Login() {

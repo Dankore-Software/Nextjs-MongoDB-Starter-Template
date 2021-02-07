@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Layout from './components/shared/layouts';
 import Homepage from './components/homepage';
 import { connectToDatabase } from '../util/mongodb';
@@ -6,9 +5,6 @@ import { connectToDatabase } from '../util/mongodb';
 export default function Home({ isConnected }) {
   return (
     <Layout>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <Homepage props={isConnected} />
     </Layout>
   );
