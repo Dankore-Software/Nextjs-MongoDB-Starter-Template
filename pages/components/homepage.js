@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function Homepage() {
+export default function Homepage(props) {
   return (
     <div className="relative bg-white">
       <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
@@ -214,6 +214,9 @@ export default function Homepage() {
               </dl>
             </div>
           </div>
+        </div>
+        <div className="text-center">
+          {props ? 'MongoDB is connected' : 'MongoDB is not connected'}
         </div>
       </main>
     </div>

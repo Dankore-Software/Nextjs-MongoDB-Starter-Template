@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import { connectToDatabase } from '../util/mongodb';
 import Layout from './components/shared/layouts';
 import Homepage from './components/homepage';
+import { connectToDatabase } from '../util/mongodb';
 
 export default function Home({ isConnected }) {
   return (
@@ -9,25 +9,17 @@ export default function Home({ isConnected }) {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Homepage />
-      <div className="text-center">
-        {isConnected ? 'MongoDB is connected' : 'MongoDB is not connected'}
-      </div>
+      <Homepage props={isConnected} />
     </Layout>
   );
 }
 
 export async function getServerSideProps() {
-  const { db, client } = await connectToDatabase();
-  const customersCollection = await db.collection('customers');
-  const customers = await customersCollection.find({}).toArray();
-
-  // CHECK DB CONNECTION
+  const { client } = await connectToDatabase();
   const isConnected = await client.isConnected();
 
   return {
     props: {
-      customers: JSON.parse(JSON.stringify(customers)),
       isConnected,
     },
   };
