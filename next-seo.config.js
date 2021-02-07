@@ -1,3 +1,6 @@
+// THIS FILE CONTAINS DEFAULT SEO WHICH MEANS THIS SEO WILL BE AVAILABLE ON ALL
+// PAGES IN THIS APP
+
 const title = 'Next.js MongoDB Starter Template';
 const description = 'Dankore Software Nextjs MongoDB Starter Template.';
 
