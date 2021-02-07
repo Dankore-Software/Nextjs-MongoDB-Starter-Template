@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Homepage(props) {
   return (
@@ -71,10 +72,9 @@ export default function Homepage(props) {
                 <a href="#" className="font-medium text-gray-500 hover:text-gray-900">
                   Company
                 </a>
-
-                <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Log in
-                </a>
+                <Link href="/login">
+                  <a className="font-medium text-indigo-600 hover:text-indigo-500">Log in</a>
+                </Link>
               </div>
             </nav>
           </div>
