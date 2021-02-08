@@ -4,8 +4,6 @@ stages:
 
 services:
   - docker:19.03.12-dind
-  - Environment=HTTP_PROXY=http://1.1.1.1:111
-  - Environment=HTTPS_PROXY=http://1.1.1.1:111
 
 build_next-mongodb-template:
   stage: build
