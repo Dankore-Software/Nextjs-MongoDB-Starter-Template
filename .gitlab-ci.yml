@@ -3,10 +3,20 @@ stages:
   - build
   - deploy
 
+image: docker:stable
+
 services:
   - docker:dind
 
 build_next-mongodb-template:
+  variables:
+    CONTAINER_IMAGE: registry.gitlab.com/$CI_PROJECT_PATH
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    
   stage: build
   image: docker:latest
   script:
