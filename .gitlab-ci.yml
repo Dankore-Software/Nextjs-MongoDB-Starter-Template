@@ -1,15 +1,12 @@
-image: docker:latest
-
 stages:
   - build
   - deploy
 
-services:
-  - docker:dind
-
 build_next-mongodb-template:
   stage: build
   image: docker:latest
+  services:
+    - docker:18.09.7-dind
   script:
     - cd /
     - sudo docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
