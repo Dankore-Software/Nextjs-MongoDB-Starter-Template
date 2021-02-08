@@ -1,11 +1,9 @@
-
-image: docker:stable
 stages:
   - build
   - deploy
 
-# services:
-#   - docker:dind
+services:
+  - docker:dind
 
 build_next-mongodb-template:
   stage: build
