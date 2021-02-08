@@ -14,6 +14,7 @@ build_next-mongodb-template:
     - docker build --pull -t "$CI_REGISTRY_IMAGE/next-mongodb-template" .
     - docker push "$CI_REGISTRY_IMAGE/next-mongodb-template"
   # allow_failure: false;
+  # test
   when: manual
   only:
     - master
