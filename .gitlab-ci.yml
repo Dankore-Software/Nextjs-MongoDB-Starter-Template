@@ -3,7 +3,7 @@ stages:
   - deploy
 
 services:
-  - docker:19.03.12-dind
+  - docker:dind
 
 build_next-mongodb-template:
   stage: build
