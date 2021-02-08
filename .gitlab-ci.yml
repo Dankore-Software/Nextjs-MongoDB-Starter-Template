@@ -2,17 +2,8 @@ stages:
   - build
   - deploy
 
-image: docker:stable
-
 services:
-    - name: docker:dind
-      entrypoint: ["env", "-u", "DOCKER_HOST"]
-      command: ["dockerd-entrypoint.sh"]
-variables:
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_DRIVER: overlay2
-    # See https://github.com/docker-library/docker/pull/166
-    DOCKER_TLS_CERTDIR: ""
+  - docker:19.03.12-dind
 
 build_next-mongodb-template:
   stage: build
