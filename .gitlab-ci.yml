@@ -10,6 +10,7 @@ build_next-mongodb-template:
   stage: build
   image: docker:latest
   script:
+    - cd /
     - sudo docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - sudo docker build --pull -t "$CI_REGISTRY_IMAGE/next-mongodb-template" .
     - sudo docker push "$CI_REGISTRY_IMAGE/next-mongodb-template"
