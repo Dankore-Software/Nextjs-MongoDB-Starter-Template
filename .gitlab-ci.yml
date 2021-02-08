@@ -1,0 +1,32 @@
+
+stages:
+  - build
+  - deploy
+
+services:
+  - docker:dind
+
+build_next-mongodb-template:
+  stage: build
+  image: docker:latest
+  script:
+    - cd server
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/next-mongodb-template" .
+    - docker push "$CI_REGISTRY_IMAGE/next-mongodb-template"
+  # allow_failure: false;
+  when: manual
+  only:
+    - master
+
+deploy_next-mongodb-template:
+  stage: deploy
+  image: caprover/caprover:1.8.2
+  script:
+   - caprover deploy -h $CAPROVER_URL -p $CAPROVER_PASS -a next-mongodb-template -i "$CI_REGISTRY_IMAGE/next-mongodb-template"
+  allow_failure: false
+  when: manual
+  only:
+    - master
+  tags:
+   - production
