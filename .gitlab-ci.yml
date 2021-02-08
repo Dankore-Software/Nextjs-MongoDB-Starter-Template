@@ -6,7 +6,6 @@ image: docker:stable
 
 services:
   - docker:dind
-  - privileged:true
 
 build_next-mongodb-template:
   stage: build
