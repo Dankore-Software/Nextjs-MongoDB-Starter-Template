@@ -1,25 +1,20 @@
-FROM node:14-alpine
+
+
+
+ FROM node:14-alpine
 
 RUN apk update && apk upgrade && \
     apk add --no-cache git
-
 RUN mkdir -p /usr/src/app
-
 WORKDIR /usr/src/app
 
-RUN npm install --production && npm cache clean --force
-
 COPY ./package.json /usr/src/app/
-
-# Build app
-RUN npm run build
-
+RUN npm install --production && npm cache clean --force
 COPY ./ /usr/src/app
 
+RUN npm run build
 ENV NODE_ENV production
-
 ENV PORT 80
-
 EXPOSE 80
 
 CMD [ "npm", "start" ]
