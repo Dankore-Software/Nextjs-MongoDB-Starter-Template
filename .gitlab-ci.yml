@@ -34,9 +34,6 @@ deploy_next-mongodb-template:
   when: manual
   only:
     - master
-  tags:
-   - production
-
 
 
 # build-docker-master:
