@@ -22,11 +22,10 @@
 #     - docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl $CAPROVER_URL --caproverPassword $CAPROVER_PASSWORD --caproverApp $CAPROVER_APP --imageName $CONTAINER_FULL_IMAGE_NAME_WITH_TAG
 #   only:
 #     - master
-image: docker:19.03.1
-stages:
-  - build
-  - deploy
 
+
+
+image: docker:19.03.1
 services:
   - docker:19.03.1-dind
 
