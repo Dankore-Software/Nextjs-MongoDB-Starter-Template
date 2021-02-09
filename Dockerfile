@@ -24,8 +24,6 @@ COPY . .
 ## Copy built node modules and binaries without including the toolchain
 COPY --from=builder /usr/app/node_modules /usr/app/node_modules
 
-ENV NODE_ENV=production
-ENV PORT=80
 EXPOSE 80
 
 USER node
