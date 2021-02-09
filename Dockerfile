@@ -1,19 +1,29 @@
+FROM node:10.15.3-alpine as builder
 
+## Install build toolchain, install node deps and compile native add-ons
+RUN apk add --no-cache --virtual .gyp python make g++
 
+WORKDIR /usr/app
 
- FROM node:14-alpine
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci --quiet --production
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache git
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# Production stage
+FROM node:10.15.3-alpine as app
 
-COPY ./package.json /usr/src/app/
-RUN npm install --production && npm cache clean --force
-COPY ./ /usr/src/app
+WORKDIR /usr/app
 
-ENV NODE_ENV production
-ENV PORT 80
+## Copy source files
+COPY . .
+
+## Copy built node modules and binaries without including the toolchain
+COPY --from=builder /usr/app/node_modules /usr/app/node_modules
+
+ENV NODE_ENV=production
+ENV PORT=80
 EXPOSE 80
 
-CMD [ "npm", "start" ]
+USER node
+CMD [ "node", "src/start.js"]
+
