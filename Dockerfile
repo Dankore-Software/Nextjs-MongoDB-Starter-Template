@@ -23,4 +23,4 @@ EXPOSE 80
 USER node
 
 # Launch app with PM2
-ENTYRPOINT [ "pm2-runtime", "start", "npm", "--", "start" ]
+CMD ["pm2-runtime", "start", "npm", "--", "start"]
