@@ -28,26 +28,32 @@ stages:
   - deploy
 
 services:
-  - docker:dind
+  - docker:19.03.1-dind
 
 build_next-mongodb-template:
   stage: build
-  image: docker:latest
+  image: docker:19.03.1
   script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - docker build --pull -t "$CI_REGISTRY_IMAGE/next-mongodb-template" .
-    - docker push "$CI_REGISTRY_IMAGE/next-mongodb-template"
+     - export DOCKER_REGISTRY_USER=$CI_REGISTRY_USER # built-in GitLab Registry User
+     - export DOCKER_REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD
+     - export DOCKER_REGISTRY_URL=$CI_REGISTRY 
+     - export COMMIT_HASH=$CI_COMMIT_SHA 
+     - export IMAGE_NAME_WITH_REGISTRY_PREFIX=$CI_REGISTRY_IMAGE 
+     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" $DOCKER_REGISTRY_URL
+     - export CONTAINER_FULL_IMAGE_NAME_WITH_TAG=$IMAGE_NAME_WITH_REGISTRY_PREFIX/my-build-image:$COMMIT_HASH
+     - docker build -f ./Dockerfile --pull -t built-image-name .
+     - docker tag built-image-name "$CONTAINER_FULL_IMAGE_NAME_WITH_TAG"
   # allow_failure: false;
-  # test
   when: manual
   only:
     - master
 
 deploy_next-mongodb-template:
   stage: deploy
-  image: caprover/caprover:1.8.2
+  image: docker:19.03.1
   script:
-   - caprover deploy -h $CAPROVER_URL -p $CAPROVER_PASSWORD -a next-mongodb-template -i "$CI_REGISTRY_IMAGE/next-mongodb-template"
+   - docker push "$CONTAINER_FULL_IMAGE_NAME_WITH_TAG"
+   - docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl $CAPROVER_URL --caproverPassword $CAPROVER_PASSWORD --caproverApp $CAPROVER_APP --imageName $CONTAINER_FULL_IMAGE_NAME_WITH_TAG
   allow_failure: false
   when: manual
   only:
