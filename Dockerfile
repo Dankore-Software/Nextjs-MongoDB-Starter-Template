@@ -5,6 +5,10 @@ RUN apk add --no-cache --virtual .gyp python make g++
 
 WORKDIR /usr/app
 
+# Install PM2 globally
+RUN npm install --global pm2
+
+
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci --quiet --production
@@ -25,5 +29,8 @@ ENV PORT=80
 EXPOSE 80
 
 USER node
-CMD [ "node", "src/start.js"]
+
+# Launch app with PM2
+CMD [ "pm2-runtime", "start", "npm", "--", "start" ]
+
 
