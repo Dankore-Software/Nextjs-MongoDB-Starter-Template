@@ -1,34 +1,18 @@
-FROM node:10.15.3-alpine as builder
-
-## Install build toolchain, install node deps and compile native add-ons
-RUN apk add --no-cache --virtual .gyp python make g++
-
-WORKDIR /usr/app
-
-# Install PM2 globally
-RUN npm install --global pm2
+# FROM node:14-alpine
+# Uncomment the line above if you want to use a Dockerfile instead of templateId
 
 
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm ci --quiet --production
+RUN apk update && apk upgrade && \
+    apk add --no-cache git
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-# Production stage
-FROM node:10.15.3-alpine as app
-
-WORKDIR /usr/app
-
-## Copy source files
-COPY . .
-
-## Copy built node modules and binaries without including the toolchain
-COPY --from=builder /usr/app/node_modules /usr/app/node_modules
-
+COPY ./package.json /usr/src/app/
+RUN npm install --production && npm cache clean --force
+COPY ./ /usr/src/app
+ENV NODE_ENV production
+ENV PORT 80
 EXPOSE 80
+RUN npm run build
 
-USER node
-
-# Launch app with PM2
-CMD [ "pm2-runtime", "start", "npm", "--", "start" ]
-
-
+CMD [ "npm", "start" ]
