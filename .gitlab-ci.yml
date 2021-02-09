@@ -25,6 +25,7 @@ build-docker-master:
     - master
   tags:
     - production
+    - caprover
 
 
 # image: docker:git
