@@ -1,18 +1,30 @@
-# FROM node:14-alpine
-# Uncomment the line above if you want to use a Dockerfile instead of templateId
+FROM node:alpine
 
+# Set working directory
+WORKDIR /usr/app
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache git
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# Install PM2 globally
+RUN npm install --global pm2
 
-COPY ./package.json /usr/src/app/
-RUN npm install --production && npm cache clean --force
-COPY ./ /usr/src/app
-ENV NODE_ENV production
-ENV PORT 80
-EXPOSE 80
+# Copy "package.json" and "package-lock.json" before other files
+# Utilise Docker cache to save re-installing dependencies if unchanged
+COPY ./package*.json ./
+
+# Install dependencies
+RUN npm install --production
+
+# Copy all files
+COPY ./ ./
+
+# Build app
 RUN npm run build
 
-CMD [ "npm", "start" ]
+# Expose the listening port
+EXPOSE 80
+
+# Run container as non-root (unprivileged) user
+# The "node" user is provided in the Node.js Alpine base image
+USER node
+
+# Launch app with PM2
+CMD [ "pm2-runtime", "start", "npm", "--", "start" ]
