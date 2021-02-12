@@ -2,7 +2,7 @@ name: Latest Release
 
 on:
   release:
-    types: [published, unpublished, deleted, created, prereleased, edited]
+    types: [published]
     
 jobs: 
   build: # FIRST JOB
