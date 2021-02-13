@@ -1,11 +1,15 @@
 {
-  "name": "@dankore-software/nextjs-mongodb-starter-template",
+  "name": "@dankore/nextjs-mongodb-starter-template",
   "description": "DS Next.js MongoDB Starter Template",
   "version": "1.0.17",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dankore-Software/Nextjs-MongoDB-Starter-Template.git"
   },
   "dependencies": {
     "autoprefixer": "^10.2.4",
