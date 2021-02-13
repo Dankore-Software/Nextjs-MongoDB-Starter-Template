@@ -1,5 +1,5 @@
 {
-  "name": "@dankore-software/nextjs-mongodb-starter-template",
+  "name": "@dankore/nextjs-mongodb-starter-template",
   "description": "DS Next.js MongoDB Starter Template",
   "version": "1.0.5",
   "scripts": {
