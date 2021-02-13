@@ -1,7 +1,7 @@
 {
   "name": "@dankore/nextjs-mongodb-starter-template",
   "description": "DS Next.js MongoDB Starter Template",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
